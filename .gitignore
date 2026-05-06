@@ -51,3 +51,8 @@ examples/.dirstamp
 build/
 CMakeCache.txt
 compile_commands.json
+
+# Unignore files with extension and Makefile in tests dir
+!tests/
+!tests/*.*
+!tests/Makefile
