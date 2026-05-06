@@ -49,3 +49,5 @@ tutorial/protocol/.dirstamp
 tutorial/sockets/.dirstamp
 examples/.dirstamp
 build/
+CMakeCache.txt
+compile_commands.json
