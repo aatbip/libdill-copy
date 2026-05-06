@@ -96,6 +96,6 @@ int main() {
     go(worker('o'));
     go(worker('p'));
     go(worker('q'));
-    msleep(now() + 50000);
+    msleep(now() + 30000);
     return 0;
 }
