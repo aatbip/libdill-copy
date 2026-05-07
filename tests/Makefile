@@ -10,4 +10,4 @@ out: install ${test_file}
 
 run: out
 	@echo "\n------running-------\n"
-	LD_LIBRARY_PATH=${PREFIX}/lib ./$^
+	LD_LIBRARY_PATH=${PREFIX}/lib ./$^ ${arg}
