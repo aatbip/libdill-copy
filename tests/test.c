@@ -8,8 +8,7 @@ int main(int argc, char *argv[]) {
     if (argc > 1) {
         port = atoi(argv[1]);
     }
-    printf("%s %s\n", argv[1], argv[2]);
-    printf("%d\n", port);
+    printf("PORT %d\n", port);
     struct ipaddr addr;
     int rc = ipaddr_local(&addr, NULL, port, 0);
     if (rc < 0) {
