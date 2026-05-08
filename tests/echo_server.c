@@ -1,12 +1,30 @@
 /*Asynchronous echo server*/
 #include "../libdill.h"
 #include <stdio.h>
+#include <unistd.h>
 
-void counter() {
-    for (int i = 0; i < 10; i++) {
-        printf("%d\n", i);
-        msleep(now() + 1000);
+coroutine void routine(int s) {
+    int framed = suffix_attach(s, "\n", 1);
+    if (framed < 0) {
+        perror("suffix_attach");
+        hclose(s);
+        return;
     }
+
+    while (1) {
+        char msg[100];
+        ssize_t rc = mrecv(framed, msg, sizeof(msg) - 1, -1);
+        if (rc < 0) {
+            perror("mrecv");
+            break;
+        }
+        msg[rc] = '\0';
+        msend(framed, msg, sizeof(msg) - 1, -1);
+        printf("msg: %s\n", msg);
+    }
+
+    s = suffix_detach(framed, -1);
+    hclose(s);
 }
 
 int main(void) {
@@ -17,6 +35,7 @@ int main(void) {
     while (1) {
         int s = tcp_accept(ls, NULL, -1);
         printf("new connection\n");
-        go(counter());
+        go(routine(s));
     }
+    msleep(-1);
 }
