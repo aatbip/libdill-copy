@@ -3,27 +3,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
-    int port;
-    if (argc > 1) {
-        port = atoi(argv[1]);
+coroutine void worker(int n) {
+    int i = 0, j = 0;
+    if (n == 1) {
+        for (; i < 10; i++) {
+            printf("1: %d\n", i);
+            msleep(now() + 100);
+        }
+        return;
     }
-    printf("PORT %d\n", port);
-    struct ipaddr addr;
-    int rc = ipaddr_local(&addr, NULL, port, 0);
-    if (rc < 0) {
-        perror("Can't open listening socket");
-        exit(EXIT_FAILURE);
+    if (n == 2) {
+        for (; j < 10; j++) {
+            printf("2: %d\n", j);
+            msleep(now() + 100);
+        }
+        return;
     }
-    int ls = tcp_listen(&addr, 10);
-    assert(ls >= 0);
-    while (1) {
-        int s = tcp_accept(ls, NULL, -1);
-        assert(s >= 0);
-        printf("New connection!\n");
-        rc = hclose(s);
-        assert(rc == 0);
-    }
+}
 
-    exit(EXIT_SUCCESS);
+int main(int argc, char *argv[]) {
+    // each call to go() returns the next free handle and creates a new bundle
+    //  int handle1 = go(worker(1));
+    //  int handle2 = go(worker(2));
+
+    // struct dill_bundle_storage st;
+    // int handle = dill_bundle_mem(&st);
+
+    int handle = dill_bundle();
+    printf("handle: %d\n", handle);
+    int b = bundle_go(handle, worker(1));
+    int c = bundle_go(handle, worker(2));
+    printf("a: %d b: %d c: %d\n", handle, b, c);
+    bundle_wait(handle, -1);
+    hclose(handle);
+    return 0;
 }
