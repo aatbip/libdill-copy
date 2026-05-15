@@ -32,6 +32,7 @@
 
 struct dill_ctx {
     int initialized;
+    int bundle_cnt;
     struct dill_ctx_now now;
     struct dill_ctx_cr cr;
     struct dill_ctx_handle handle;
@@ -47,13 +48,13 @@ struct dill_ctx *dill_ctx_init(void);
 #if !defined DILL_THREADS
 
 extern struct dill_ctx dill_ctx_;
-#define dill_getctx \
+#define dill_getctx                                                            \
     (dill_fast(dill_ctx_.initialized) ? &dill_ctx_ : dill_ctx_init())
 
 #elif defined __GNUC__ && !defined __APPLE__ && !defined DILL_THREAD_FALLBACK
 
 extern __thread struct dill_ctx dill_ctx_;
-#define dill_getctx \
+#define dill_getctx                                                            \
     (dill_fast(dill_ctx_.initialized) ? &dill_ctx_ : dill_ctx_init())
 
 #else
@@ -64,4 +65,3 @@ struct dill_ctx *dill_getctx_(void);
 #endif
 
 #endif
-

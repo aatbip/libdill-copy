@@ -267,6 +267,7 @@ DILL_EXPORT int dill_bundle(void);
 DILL_EXPORT int dill_bundle_mem(struct dill_bundle_storage *mem);
 DILL_EXPORT int dill_bundle_wait(int h, int64_t deadline);
 DILL_EXPORT int dill_yield(void);
+DILL_EXPORT int dill_bundle_cnt (void);
 
 #if !defined DILL_DISABLE_RAW_NAMES
 #define coroutine dill_coroutine
@@ -279,6 +280,7 @@ DILL_EXPORT int dill_yield(void);
 #define bundle_mem dill_bundle_mem
 #define bundle_wait dill_bundle_wait
 #define yield dill_yield
+#define bundle_cnt dill_bundle_cnt
 #endif
 
 /******************************************************************************/
