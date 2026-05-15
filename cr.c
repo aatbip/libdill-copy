@@ -111,6 +111,10 @@ error1:
     return -1;
 }
 
+int dill_bundle_cnt(void){
+    return dill_getctx->bundle_cnt;
+}
+
 static void *dill_bundle_query(struct dill_hvfs *vfs, const void *type) {
     if(dill_fast(type == dill_bundle_type)) return vfs;
     errno = ENOTSUP;

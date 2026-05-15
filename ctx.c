@@ -25,6 +25,7 @@
 static void dill_ctx_init_(struct dill_ctx *ctx) {
     dill_assert(ctx->initialized == 0);
     ctx->initialized = 1;
+    ctx->bundle_cnt = 0; //initialize bundle_cnt
     int rc = dill_ctx_now_init(&ctx->now);
     dill_assert(rc == 0);
     rc = dill_ctx_cr_init(&ctx->cr);
@@ -200,4 +201,3 @@ struct dill_ctx *dill_getctx_(void) {
 #endif
 
 #endif
-

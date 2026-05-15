@@ -68,7 +68,9 @@ void dill_ctx_handle_term(struct dill_ctx_handle *ctx) {
 }
 
 int dill_hmake(struct dill_hvfs *vfs) {
-    struct dill_ctx_handle *ctx = &dill_getctx->handle;
+    struct dill_ctx *c = dill_getctx;
+    c->bundle_cnt += 1;
+    struct dill_ctx_handle *ctx = &c->handle;
     if(dill_slow(!vfs || !vfs->query || !vfs->close)) {
         errno = EINVAL; return -1;}
     /* Returns ECANCELED if shutting down. */
