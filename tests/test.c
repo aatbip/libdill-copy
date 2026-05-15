@@ -23,18 +23,19 @@ coroutine void worker(int n) {
 
 int main(int argc, char *argv[]) {
     // each call to go() returns the next free handle and creates a new bundle
-    //  int handle1 = go(worker(1));
-    //  int handle2 = go(worker(2));
+    int handle1 = go(worker(1));
+    int handle2 = go(worker(2));
+    printf("bundle_cnt: %d\n", bundle_cnt());
 
     // struct dill_bundle_storage st;
     // int handle = dill_bundle_mem(&st);
-
-    int handle = dill_bundle();
-    printf("handle: %d\n", handle);
-    int b = bundle_go(handle, worker(1));
-    int c = bundle_go(handle, worker(2));
-    printf("a: %d b: %d c: %d\n", handle, b, c);
-    bundle_wait(handle, -1);
-    hclose(handle);
+    //
+    // int handle = dill_bundle();
+    // printf("handle: %d\n", handle);
+    // int b = bundle_go(handle, worker(1));
+    // int c = bundle_go(handle, worker(2));
+    // printf("a: %d b: %d c: %d\n", handle, b, c);
+    // bundle_wait(handle, -1);
+    // hclose(handle);
     return 0;
 }
